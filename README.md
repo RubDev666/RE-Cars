@@ -2,6 +2,7 @@
 Proyecto con Nexts JS (App Router) y Cloudinary
 
 - TypeScript
+- Redux toolkit
 - Sass
 - React con Next JS (App Router)
 - REST API
@@ -20,6 +21,7 @@ Usando librerias frontend como:
 ## Caracteristicas del proyecto
 
 - Filtrador avanzado de autos al detalle
+- Manejo de estado con redux toolkit
 - Barra de busqueda de autos
 - Manejo de errores
 - Routing (Next js App Router)
