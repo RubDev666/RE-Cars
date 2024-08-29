@@ -6,7 +6,6 @@ import Link from "next/link";
 import Searcher from "./Searcher";
 
 import { SearchFiltersProps } from "@/types";
-import { brands, doors, years, transmissions } from "@/utils/filtersOptions";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -31,7 +30,7 @@ const optionsType: string[] = Object.values(optionsKey);
 export default function SearchFiltersCont({ openMenu, currentOption, setCurrentOption }: SearchFiltersProps) {
     const pathname = usePathname();
 
-    const { fetchStatus } = useCarsSelectors();
+    const { fetchStatus, filterOptions } = useCarsSelectors();
 
     return (
         <div className={`search-filters-container ${pathname !== '/' ? 'none' : 'items-between'}`} >
@@ -83,25 +82,25 @@ export default function SearchFiltersCont({ openMenu, currentOption, setCurrentO
 
                 <div className="options p-family">
                     {currentOption === optionsKey.keyBrand && (
-                        [...brands].map((brand) => (
+                        filterOptions.brands.map((brand) => (
                             <Link href={`/seminuevos?brand=${brand.toLowerCase().replace(' ', '+')}`} key={brand}>{brand}</Link>
                         ))
                     )}
 
                     {currentOption === optionsKey.keyYear && (
-                        [...years].map((year) => (
+                        filterOptions.years.map((year) => (
                             <Link href={`/seminuevos?year=${year.toString()}`} key={year}>{year}</Link>
                         ))
                     )}
 
                     {currentOption === optionsKey.keyDoors && (
-                        [...doors].map((door) => (
+                        filterOptions.doors.map((door) => (
                             <Link href={`/seminuevos?doors=${door.toString()}`} key={door}>{door}</Link>
                         ))
                     )}
 
                     {currentOption === optionsKey.keyTransmission && (
-                        [...transmissions].map((transmission) => (
+                        filterOptions.transmissions.map((transmission) => (
                             <Link href={`/seminuevos?transmission=${transmission.toLowerCase()}`} className="capitalize" key={transmission}>{transmission}</Link>
                         ))
                     )}

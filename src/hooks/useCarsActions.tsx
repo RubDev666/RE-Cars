@@ -9,7 +9,7 @@ export const useCarsActions = () => {
     const useAppDispatch: () => AppDispatch = useDispatch; 
     const dispatch = useAppDispatch();
 
-    const getCarsAction = (cars: Car[] | undefined) => dispatch(getCars(cars));
+    const getCarsAction = (cars: Car[] | undefined) => dispatch(getCars({cars, filterOptions: undefined}));
     const filterAction = (params: Params) => dispatch(filter(params));
     const resetFilterAction = () => dispatch(resetFilter());
 

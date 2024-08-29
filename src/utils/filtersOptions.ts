@@ -1,15 +1,14 @@
-import { Car } from "@/types";
+import { Car, FilterOptions } from "@/types";
 
-export let brands: Set<string> = new Set();
-export let years: Set<number> = new Set();
-export let doors: Set<number> = new Set();
-export let transmissions: Set<string> = new Set();
-export let colors: Set<string> = new Set();
-
-export function extractData(cars: Car[] | []) {
+export function extractData(cars: Car[] | []): FilterOptions | undefined {
     if (!cars || cars.length === 0) return;
 
     let y = [];
+
+    let brands: Set<string> = new Set();
+    let doors: Set<number> = new Set();
+    let transmissions: Set<string> = new Set();
+    let colors: Set<string> = new Set();
 
     for (let car of cars) {
         brands.add(car.brand);
@@ -22,5 +21,13 @@ export function extractData(cars: Car[] | []) {
     //To iterate the "sets" you have to put in"tsconfig" > "compilerOptions" > "target": "es6"
 
     y.sort((a: number, b: number) => b - a); //order the year from highest to lowest
-    years = new Set(y);
+    const years = new Set(y);
+
+    return {
+        brands: [...brands],
+        doors: [...doors],
+        colors: [...colors],
+        transmissions: [...transmissions],
+        years: [...years]
+    }
 }

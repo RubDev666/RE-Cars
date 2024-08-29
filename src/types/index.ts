@@ -21,6 +21,14 @@ export type TagParam = {
     value: string;
 }
 
+export type FilterOptions = {
+    brands: string[];
+    years: number[];
+    doors: number[];
+    colors: string[];
+    transmissions: string[];
+}
+
 export type Options = {
     [keyFil: string]: {
         bool: boolean,

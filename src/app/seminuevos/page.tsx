@@ -1,6 +1,5 @@
-import { Suspense } from "react"; //"useSerachParams" error solution
 import PreOwned from "@/pageComponents/PreOwned";
-import { Spinner, Searcher } from "@/components";
+import { Searcher } from "@/components";
 
 export const metadata = {
     title: 'RE Autos | Seminuevos',
@@ -14,9 +13,7 @@ export default function Page() {
                 <Searcher />
             </div>
 
-            <Suspense fallback={<Spinner />} >
-                <PreOwned />
-            </Suspense>
+            <PreOwned />
         </div>
     )
 }

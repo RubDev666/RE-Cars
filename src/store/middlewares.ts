@@ -5,9 +5,13 @@ import { extractData } from "@/utils/filtersOptions";
 export const extractDataMiddleware: Middleware = store => next => (action: any) => {
     if(!action.payload) return next(action);
 
-    if (action.type === 'cars/getCars' && action.payload.length > 0) {
-        extractData(action.payload);
+    const filterOptions = extractData(action.payload.cars);
+
+    if (action.type === 'cars/getCars' && filterOptions) {
+        action.payload = {cars: action.payload.cars, filterOptions};
+
+        next(action);
     }
 
-    next(action);
+    //next(action);
 }

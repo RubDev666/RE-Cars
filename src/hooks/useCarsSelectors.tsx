@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import type { TypedUseSelectorHook } from "react-redux";
 
-import { carsSelect, fetchStatusSelect, filterCarsSelect } from "@/store/cars/cars.selector";
+import { carsSelect, fetchStatusSelect, filterCarsSelect, filterOptionsSelect } from "@/store/cars/cars.selector";
 import { RootState } from "@/store";
 
 export const useCarsSelectors = () => {
@@ -10,6 +10,7 @@ export const useCarsSelectors = () => {
     const cars = useAppSelector(carsSelect);
     const fetchStatus = useAppSelector(fetchStatusSelect);
     const filterCars = useAppSelector(filterCarsSelect);
+    const filterOptions = useAppSelector(filterOptionsSelect);
 
-    return {cars, fetchStatus, filterCars};
+    return {cars, fetchStatus, filterCars, filterOptions};
 }

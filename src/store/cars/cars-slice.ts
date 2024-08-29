@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
-import { Car, KeysParams } from '@/types';
+import { Car, FilterOptions, KeysParams } from '@/types';
 import { InitialState, Params } from '@/types/storeTypes';
 
 import { keysParams } from '@/utils/globalVariables';
@@ -9,6 +9,13 @@ import { orderF} from '../utilities';
 
 const initialState: InitialState = {
     cars: [],
+    filtersOptions: {
+        brands: [],
+        doors: [],
+        transmissions: [],
+        colors: [],
+        years: []
+    },
     fetchStatus: 'loading',
     filtersCars: []
 };
@@ -17,14 +24,15 @@ export const carsSlice = createSlice({
     name: 'cars',
     initialState,
     reducers: {
-        getCars: (state, action: PayloadAction<Car[] | undefined>) => {
-            if (!action.payload) {
+        getCars: (state, action: PayloadAction<{cars: Car[] | undefined, filterOptions: FilterOptions | undefined} | undefined>) => {
+            if (!action.payload || !action.payload?.cars || !action.payload?.filterOptions) {
                 state.fetchStatus = 'error';
                 return;
             }
 
-            state.cars = action.payload;
-            state.filtersCars = action.payload;
+            state.cars = action.payload.cars;
+            state.filtersCars = action.payload.cars;
+            state.filtersOptions = action.payload.filterOptions;
 
             state.fetchStatus = 'completed';
         },

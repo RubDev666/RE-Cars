@@ -19,3 +19,8 @@ export const filterCarsSelect = createSelector(
     [selectState],
     (state) => state.filtersCars
 )
+
+export const filterOptionsSelect = createSelector(
+    [selectState],
+    (state) => state.filtersOptions
+)

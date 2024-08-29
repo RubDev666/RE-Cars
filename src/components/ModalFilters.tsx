@@ -8,7 +8,8 @@ import { faAngleDown, faAngleUp,faTimes } from '@fortawesome/free-solid-svg-icon
 
 import { Options, ModalProps, KeysParams } from '@/types';
 import { keysParams } from '@/utils/globalVariables';
-import { brands, years, doors, transmissions, colors } from '@/utils/filtersOptions';
+import { useCarsSelectors } from '@/hooks/useCarsSelectors';
+//import { brands, years, doors, transmissions, colors } from '@/utils/filtersOptions';
 
 export default function ModalFilters({ setModalFilters, createURL, pathname, params, router, setTags, tagsParams }: ModalProps) {
     const [brandAccor, setBrand] = useState(false);
@@ -16,6 +17,8 @@ export default function ModalFilters({ setModalFilters, createURL, pathname, par
     const [colorAccor, setColor] = useState(false);
     const [doorsAccor, setDoor] = useState(false);
     const [transmissionsAccor, setTransmission] = useState(false);
+
+    const {filterOptions} = useCarsSelectors();
 
     const getClass = (key: KeysParams, value: string): string => {
         const p = params.get(key);
@@ -68,31 +71,31 @@ export default function ModalFilters({ setModalFilters, createURL, pathname, par
                                 bool: brandAccor,
                                 set: setBrand,
                                 keyUI: 'Marca',
-                                options: [...brands]
+                                options: filterOptions.brands
                             },
                             year: {
                                 bool: yearAccor,
                                 set: setYear,
                                 keyUI: 'Año',
-                                options: [...years]
+                                options: filterOptions.years
                             },
                             doors: {
                                 bool: doorsAccor,
                                 set: setDoor,
                                 keyUI: 'Puertas',
-                                options: [...doors]
+                                options: filterOptions.doors
                             },
                             transmission: {
                                 bool: transmissionsAccor,
                                 set: setTransmission,
                                 keyUI: 'Transmision',
-                                options: [...transmissions]
+                                options: filterOptions.transmissions
                             },
                             color: {
                                 bool: colorAccor,
                                 set: setColor,
                                 keyUI: 'Color',
-                                options: [...colors]
+                                options: filterOptions.colors
                             }
                         }
 
