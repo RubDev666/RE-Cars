@@ -24,3 +24,8 @@ export const filterOptionsSelect = createSelector(
     [selectState],
     (state) => state.filtersOptions
 )
+
+export const paramsSelect = createSelector(
+    [selectState],
+    (state) => state.keywordsParams
+)

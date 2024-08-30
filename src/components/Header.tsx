@@ -31,10 +31,10 @@ export default function Header({ data }: { data: { cars: Car[] } | undefined }) 
 
     const pathname = usePathname();
 
-    const { getCarsAction, resetFilterAction } = useCarsActions();
+    const { getCarsAction, resetFilterAction, getFilterOptionsAction } = useCarsActions();
 
     useEffect(() => {
-        getCarsAction(data?.cars);
+        getFilterOptionsAction(data?.cars);
 
         addEventListener('resize', () => {
             if (window.innerWidth >= 1024) resetMenuMobile();

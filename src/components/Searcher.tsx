@@ -5,12 +5,15 @@ import { useRouter } from "next/navigation";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import { useCarsActions } from "@/hooks/useCarsActions";
 
 export default function Searcher() {
     const [formOnSelect, setFormOnSelect] = useState(false);
     const [searchText, setBusqueda] = useState('');
 
     const router = useRouter();
+
+    const { changeParamsAction} = useCarsActions();
 
     const handleSearch = (e: React.FormEvent) => {
         e.preventDefault();
@@ -21,7 +24,9 @@ export default function Searcher() {
         const arr = searchText.toLocaleLowerCase().trim().split(' '); //includes some empty strings
 
         //here we remove empty strings and we extract the keywords
-        const arr2 = arr.filter((text) => text !== ''); 
+        const arr2 = arr.filter((text) => text !== '');
+
+        changeParamsAction('?keywords=' + arr2.join('-'));
 
         router.push('/seminuevos?keywords=' + arr2.join('-'));
     }

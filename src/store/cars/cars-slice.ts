@@ -2,10 +2,10 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
 import { Car, FilterOptions, KeysParams } from '@/types';
-import { InitialState, Params } from '@/types/storeTypes';
+import type { InitialState, Params, FetchStatus } from '@/types/storeTypes';
 
 import { keysParams } from '@/utils/globalVariables';
-import { orderF} from '../utilities';
+import { orderF, extractData} from '../utilities';
 
 const initialState: InitialState = {
     cars: [],
@@ -17,6 +17,7 @@ const initialState: InitialState = {
         years: []
     },
     fetchStatus: 'loading',
+    keywordsParams: '',
     filtersCars: []
 };
 
@@ -24,6 +25,24 @@ export const carsSlice = createSlice({
     name: 'cars',
     initialState,
     reducers: {
+        getFilterOptions: (state, action: PayloadAction<Car[] | undefined>) => {
+            if(!action.payload) {
+                state.fetchStatus = 'error';
+
+                return;
+            }
+
+            const filterOptions = extractData(action.payload);
+
+            state.filtersOptions =  filterOptions;
+            state.fetchStatus = 'completed';
+        },
+        changeFetchStatus: (state, action: PayloadAction<FetchStatus>) => {
+            state.fetchStatus = action.payload;
+        },
+        changeKeywordsParams: (state, action: PayloadAction<string>) => {
+            state.keywordsParams = action.payload;
+        },
         getCars: (state, action: PayloadAction<{cars: Car[] | undefined, filterOptions: FilterOptions | undefined} | undefined>) => {
             if (!action.payload || !action.payload?.cars || !action.payload?.filterOptions) {
                 state.fetchStatus = 'error';
@@ -102,5 +121,5 @@ export const carsSlice = createSlice({
     }
 })
 
-export const { getCars, filter, resetFilter } = carsSlice.actions;
+export const { getCars, filter, resetFilter, getFilterOptions, changeFetchStatus, changeKeywordsParams } = carsSlice.actions;
 export default carsSlice.reducer;

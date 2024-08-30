@@ -1,12 +1,11 @@
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 
 import { Car as CarComponent, ModalFilters, Spinner, Error } from "@/components";
 import { TagParam, KeysParams } from "@/types";
-import { keysParams } from "@/utils/globalVariables";
+import { apiUrl, keysParams } from "@/utils/globalVariables";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -26,16 +25,20 @@ export default function PreOwned() {
     const [orderOption, setOrderOption] = useState<string>('');
     const [showFilters, setShowFilters] = useState(true);
     const [modalFilters, setModalFilters] = useState(false);
-    const [tagsParams, setTags] = useState<TagParam[]>([])
+    const [tagsParams, setTags] = useState<TagParam[]>([]);
+    const [params, setParams] = useState<URLSearchParams | undefined>();
 
     const pathname = usePathname();
-    const params = useSearchParams();
     const router = useRouter();
 
-    const { fetchStatus, cars, filterCars } = useCarsSelectors();
-    const { filterAction } = useCarsActions();
+    const { fetchStatus, cars, filterCars, params: keywordsInput } = useCarsSelectors();
+    const { changeParamsAction } = useCarsActions();
 
     useEffect(() => {
+        const searchParams = new URLSearchParams(window.location.search);
+
+        setParams(searchParams);
+
         if (window.innerWidth >= 1024) {
             setModalFilters(true);
         } else {
@@ -52,24 +55,42 @@ export default function PreOwned() {
         })
     }, [])
 
-    //only first load
     useEffect(() => {
-        if (filterCars.length > 0) filterAction({params});
-    }, [cars])
+        if(keywordsInput !== '') {
+            const ko = new URLSearchParams(keywordsInput);
 
-    useEffect(() => {
-        getParams();
-
-        const order = params.get('order');
-
-        //don't run on first load
-        if (fetchStatus === 'completed') filterAction({params});
-
-        if (!order) {
-            setOrderOption('');
-        } else {
-            setOrderOption(order);
+            setParams(ko);
         }
+    }, [keywordsInput])
+
+    const getCars = async (searchParams: URLSearchParams) => {
+        if(!apiUrl) return;
+
+        if(searchParams.toString() === '') {
+            const cars = await fetch(apiUrl).then(res => res.json());
+
+            console.log(cars)
+        } else {
+            const url = apiUrl + '?' + searchParams.toString();
+            const cars = await fetch(url).then(res => res.json());
+            console.log(cars)
+        }
+    }
+
+    useEffect(() => {
+        if (params) {
+            getCars(params);
+
+            getParams();
+            
+            const order = params.get('order');
+
+            if (!order) {
+                setOrderOption('');
+            } else {
+                setOrderOption(order);
+            }
+        } 
     }, [params])
 
     useEffect(() => {
@@ -84,16 +105,16 @@ export default function PreOwned() {
 
     const createQueryString = useCallback(
         (name: string, value: string) => {
-            const newParams = new URLSearchParams(params);
+            const currentParams = new URLSearchParams(params);
 
             //empty spaces in a string are represented with a '+'
-            newParams.set(name, value);
+            currentParams.set(name, value);
 
-            if (name !== 'order') {
-                newParams.delete('keywords');
-            }
+            if (name !== 'order') currentParams.delete('keywords');
 
-            return newParams.toString();
+            setParams(currentParams);
+
+            return currentParams.toString();
         },
         [params]
     )
@@ -109,6 +130,8 @@ export default function PreOwned() {
 
     const getParams = () => {
         let newTags: TagParam[] = [];
+
+        if(!params) return;
 
         const keywords = params.get('keywords');
 
@@ -138,21 +161,44 @@ export default function PreOwned() {
 
     const deleteParam = (tag: TagParam) => {
         const url = '/seminuevos';
-        const currentP = new URLSearchParams(params);
+        const currentParams = new URLSearchParams(params);
 
-        const p = params.get(tag.key);
+        const p = currentParams.get(tag.key);
 
         if (!p) return;
 
         if (p.includes('-')) {
             let extract = p.split('-').filter((e: string) => e !== tag.value);
 
-            currentP.set(tag.key, extract.join('-'));
+            currentParams.set(tag.key, extract.join('-'));
         } else {
-            currentP.delete(tag.key);
+            currentParams.delete(tag.key);
         }
 
-        router.push(url + '?' + currentP.toString());
+        if(!currentParams.get('keywords')) changeParamsAction('');
+
+        setParams(currentParams);
+        router.push(url + '?' + currentParams.toString());
+    }
+
+    const resetFilters = () => {
+        if(!params) return;
+
+        const currentParams = params;
+
+        currentParams.delete('keywords');
+        currentParams.delete('brand');
+        currentParams.delete('color');
+        currentParams.delete('doors');
+        currentParams.delete('year');
+        currentParams.delete('transmission');
+        currentParams.delete('order');
+
+        setParams(currentParams);
+        getParams();
+        changeParamsAction('');
+        router.push('/seminuevos');
+        setOrderOption('');
     }
 
     return (
@@ -163,7 +209,7 @@ export default function PreOwned() {
                         <FontAwesomeIcon icon={faFilter} className="icon" /> {showFilters ? 'ocultar filtros' : 'mostrar filtros'}
                     </button>
 
-                    <Link href='/seminuevos' className="btn-clean color-4">Limpiar</Link>
+                    <button className="btn-clean color-4" onClick={resetFilters}>Limpiar</button>
 
                     <p className="results color-4">{filterCars.length} Resultados</p>
 
@@ -191,7 +237,7 @@ export default function PreOwned() {
                                 + Filtros
                             </button>
 
-                            {modalFilters && (
+                            {modalFilters && params && (
                                 <ModalFilters
                                     setModalFilters={setModalFilters}
                                     createURL={createQueryString}

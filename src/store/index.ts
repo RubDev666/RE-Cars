@@ -1,13 +1,13 @@
 import { configureStore, Tuple } from '@reduxjs/toolkit';
 
 import carsSlice from './cars/cars-slice';
-import { extractDataMiddleware } from './middlewares';
+//import { extractDataMiddleware } from './middlewares';
 
 export const store = configureStore({
     reducer: {
         carsReducer: carsSlice
     },
-    middleware: () => new Tuple(extractDataMiddleware),
+    //middleware: () => new Tuple(extractDataMiddleware),
     //middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(extractData),
 })
 

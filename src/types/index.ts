@@ -42,7 +42,7 @@ export type ModalProps = {
     setModalFilters: (value: SetStateAction<boolean>) => void;
     createURL: (name: string, value: string) => string;
     pathname: string;
-    params: ReadonlyURLSearchParams;
+    params: URLSearchParams;
     router: AppRouterInstance;
     tagsParams: TagParam[];
     setTags: Dispatch<SetStateAction<TagParam[]>>;

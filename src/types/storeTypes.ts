@@ -1,13 +1,15 @@
 import { Car, FilterOptions } from ".";
-import { ReadonlyURLSearchParams } from "next/navigation";
+
+export type FetchStatus = 'loading' | 'completed' | 'error';
 
 export type InitialState = {
     cars: Car[];
     filtersOptions: FilterOptions;
-    fetchStatus: 'loading' | 'completed' | 'error';
+    fetchStatus: FetchStatus;
     filtersCars: Car[];
+    keywordsParams: string;
 }
 
 export type Params = {
-    params: ReadonlyURLSearchParams;
+    params: URLSearchParams;
 }
