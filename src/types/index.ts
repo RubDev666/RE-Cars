@@ -1,6 +1,4 @@
 import { Dispatch, SetStateAction } from "react";
-import { ReadonlyURLSearchParams } from 'next/navigation';
-import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 
 export type Car = {
     id: string;
@@ -14,10 +12,11 @@ export type Car = {
     urlImage: string;
 }
 
-export type KeysParams = 'brand' | 'year' | 'doors' | 'transmission' | 'color';
+export type MainKeyQueryParams = 'brand' | 'year' | 'doors' | 'transmission' | 'color';
+export type AllKeyQueryParams = MainKeyQueryParams | 'keywords' | 'order';
 
 export type TagParam = {
-    key: KeysParams | 'keywords';
+    key: MainKeyQueryParams | 'keywords';
     value: string;
 }
 
@@ -39,11 +38,8 @@ export type Options = {
 }
 
 export type ModalProps = {
-    setModalFilters: (value: SetStateAction<boolean>) => void;
-    createURL: (name: string, value: string) => string;
-    pathname: string;
+    createURL: (key: AllKeyQueryParams, value: string) => void;
     params: URLSearchParams;
-    router: AppRouterInstance;
     tagsParams: TagParam[];
     setTags: Dispatch<SetStateAction<TagParam[]>>;
 }
@@ -52,4 +48,9 @@ export type SearchFiltersProps = {
     openMenu: boolean;
     currentOption: string;
     setCurrentOption: Dispatch<SetStateAction<string>>;
+}
+
+export type FiltersHeaderProps = {
+    resetFilters: () => void;
+    btnOrder: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }

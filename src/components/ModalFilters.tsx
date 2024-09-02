@@ -6,12 +6,12 @@ import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown, faAngleUp,faTimes } from '@fortawesome/free-solid-svg-icons';
 
-import { Options, ModalProps, KeysParams } from '@/types';
-import { keysParams } from '@/utils/globalVariables';
+import { Options, ModalProps, MainKeyQueryParams } from '@/types';
+import { mainKeyQueryParams } from '@/utils/globalVariables';
 import { useCarsSelectors } from '@/hooks/useCarsSelectors';
-//import { brands, years, doors, transmissions, colors } from '@/utils/filtersOptions';
+import { useCarsActions } from '@/hooks/useCarsActions';
 
-export default function ModalFilters({ setModalFilters, createURL, pathname, params, router, setTags, tagsParams }: ModalProps) {
+export default function ModalFilters({ createURL, params, setTags, tagsParams }: ModalProps) {
     const [brandAccor, setBrand] = useState(false);
     const [yearAccor, setYear] = useState(false);
     const [colorAccor, setColor] = useState(false);
@@ -19,8 +19,9 @@ export default function ModalFilters({ setModalFilters, createURL, pathname, par
     const [transmissionsAccor, setTransmission] = useState(false);
 
     const {filterOptions} = useCarsSelectors();
+    const {setUIFiltersAction} = useCarsActions();
 
-    const getClass = (key: KeysParams, value: string): string => {
+    const getClass = (key: MainKeyQueryParams, value: string): string => {
         const p = params.get(key);
 
         if (!p || !p.includes(value)) return 'btn-light';
@@ -28,7 +29,7 @@ export default function ModalFilters({ setModalFilters, createURL, pathname, par
         return 'btn-dark';
     }
 
-    const btnCreateQuery = (e: React.MouseEvent<HTMLButtonElement>, key: KeysParams) => {
+    const btnCreateQuery = (e: React.MouseEvent<HTMLButtonElement>, key: MainKeyQueryParams) => {
         const t = e.target as HTMLButtonElement;
         const text = t.innerText.toLowerCase();
 
@@ -40,7 +41,7 @@ export default function ModalFilters({ setModalFilters, createURL, pathname, par
             tag.push({key, value: text});
             setTags(tag);
 
-            router.push(pathname + '?' + createURL(key, text));
+            createURL(key, text);
 
             return;
         }
@@ -49,7 +50,7 @@ export default function ModalFilters({ setModalFilters, createURL, pathname, par
             tag.push({key, value: text});
             setTags(tag);
 
-            router.push(pathname + '?' + createURL(key, p + '-' + text));
+            createURL(key, p + '-' + text);
         }
     }
 
@@ -57,7 +58,7 @@ export default function ModalFilters({ setModalFilters, createURL, pathname, par
         <div className="modal-container">
             <div className="filters-mobile">
                 <div className="actions items-between">
-                    <button className="btn-close items-center pointer"><FontAwesomeIcon icon={faTimes} onClick={() => setModalFilters(false)} /></button>
+                    <button className="btn-close items-center pointer"><FontAwesomeIcon icon={faTimes} onClick={() => setUIFiltersAction({key: 'modalFilters', value: false})} /></button>
 
                     <p className="t-family">Filtros</p>
 
@@ -65,7 +66,7 @@ export default function ModalFilters({ setModalFilters, createURL, pathname, par
                 </div>
 
                 <div className="filters p-family">
-                    {keysParams.map((key) => {
+                    {mainKeyQueryParams.map((key) => {
                         const obj: Options = {
                             brand: {
                                 bool: brandAccor,
@@ -128,7 +129,7 @@ export default function ModalFilters({ setModalFilters, createURL, pathname, par
 
                 <button
                     className="btn-show p-family capitalize"
-                    onClick={() => setModalFilters(false)}
+                    onClick={() => setUIFiltersAction({key: 'modalFilters', value: false})}
                 >
                     Mostrar resultados
                 </button>

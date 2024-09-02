@@ -29,3 +29,8 @@ export const paramsSelect = createSelector(
     [selectState],
     (state) => state.keywordsParams
 )
+
+export const UIFiltersSelect = createSelector(
+    [selectState],
+    (state) => state.UIFilters
+)

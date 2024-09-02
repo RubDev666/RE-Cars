@@ -31,7 +31,7 @@ export default function Header({ data }: { data: { cars: Car[] } | undefined }) 
 
     const pathname = usePathname();
 
-    const { getCarsAction, resetFilterAction, getFilterOptionsAction } = useCarsActions();
+    const { getCarsAction, resetFilterAction, getFilterOptionsAction, setKeywordsParamsAction } = useCarsActions();
 
     useEffect(() => {
         getFilterOptionsAction(data?.cars);
@@ -44,6 +44,7 @@ export default function Header({ data }: { data: { cars: Car[] } | undefined }) 
     useEffect(() => {
         resetMenuMobile();
         resetFilterAction();
+        setKeywordsParamsAction('');
     }, [pathname])
 
     useEffect(() => {

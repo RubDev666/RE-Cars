@@ -7,6 +7,7 @@ import Footer from "./Footer";
 import ModalFilters from "./ModalFilters";
 import Car from "./Car";
 import Error from "./Error";
+import FiltersHeader from "./FiltersHeader";
 
 export {
     Header,
@@ -17,5 +18,6 @@ export {
     Footer,
     ModalFilters,
     Car,
-    Error
+    Error,
+    FiltersHeader
 }

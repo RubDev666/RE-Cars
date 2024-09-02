@@ -1,10 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
-import { Car, FilterOptions, KeysParams } from '@/types';
-import type { InitialState, Params, FetchStatus } from '@/types/storeTypes';
+import { Car, FilterOptions, MainKeyQueryParams } from '@/types';
+import type { InitialState, Params, FetchStatus, UIFilterPayload } from '@/types/storeTypes';
 
-import { keysParams } from '@/utils/globalVariables';
+import { mainKeyQueryParams } from '@/utils/globalVariables';
 import { orderF, extractData} from '../utilities';
 
 const initialState: InitialState = {
@@ -18,7 +18,13 @@ const initialState: InitialState = {
     },
     fetchStatus: 'loading',
     keywordsParams: '',
-    filtersCars: []
+    filtersCars: [],
+    UIFilters: {
+        openOrderOptions: false,
+        orderOption: '',
+        showFilters: true,
+        modalFilters: false
+    }
 };
 
 export const carsSlice = createSlice({
@@ -37,10 +43,10 @@ export const carsSlice = createSlice({
             state.filtersOptions =  filterOptions;
             state.fetchStatus = 'completed';
         },
-        changeFetchStatus: (state, action: PayloadAction<FetchStatus>) => {
+        setFetchStatus: (state, action: PayloadAction<FetchStatus>) => {
             state.fetchStatus = action.payload;
         },
-        changeKeywordsParams: (state, action: PayloadAction<string>) => {
+        setKeywordsParams: (state, action: PayloadAction<string>) => {
             state.keywordsParams = action.payload;
         },
         getCars: (state, action: PayloadAction<{cars: Car[] | undefined, filterOptions: FilterOptions | undefined} | undefined>) => {
@@ -70,8 +76,8 @@ export const carsSlice = createSlice({
                 let idCars: string[] = [];
 
                 //to access the car properties without validating
-                type CarProperties = KeysParams | 'model';
-                const carProperties: CarProperties[] = [...keysParams, 'model'];
+                type CarProperties = MainKeyQueryParams | 'model';
+                const carProperties: CarProperties[] = [...mainKeyQueryParams, 'model'];
 
                 extract.forEach((e: string) => {
                     for (let i = 0; i < carProperties.length; i++) {
@@ -87,7 +93,7 @@ export const carsSlice = createSlice({
                 allFilters = preFilter;
             }
 
-            keysParams.forEach((key: KeysParams) => {
+            mainKeyQueryParams.forEach((key: MainKeyQueryParams) => {
                 const values = params.get(key);
     
                 if (values) {
@@ -117,9 +123,12 @@ export const carsSlice = createSlice({
         },
         resetFilter: (state) => {
             state.filtersCars = state.cars;
+        },
+        setUIFilters: (state, action: PayloadAction<UIFilterPayload>) => {
+            state.UIFilters = {...state.UIFilters, [action.payload.key]: action.payload.value}
         }
     }
 })
 
-export const { getCars, filter, resetFilter, getFilterOptions, changeFetchStatus, changeKeywordsParams } = carsSlice.actions;
+export const { getCars, filter, resetFilter, getFilterOptions, setFetchStatus, setKeywordsParams, setUIFilters } = carsSlice.actions;
 export default carsSlice.reducer;

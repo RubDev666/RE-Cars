@@ -1,7 +1,7 @@
 'use client';
 
 import { ChangeEvent, useState } from "react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
@@ -12,8 +12,9 @@ export default function Searcher() {
     const [searchText, setBusqueda] = useState('');
 
     const router = useRouter();
+    const pathname = usePathname();
 
-    const { changeParamsAction} = useCarsActions();
+    const { setKeywordsParamsAction } = useCarsActions();
 
     const handleSearch = (e: React.FormEvent) => {
         e.preventDefault();
@@ -26,9 +27,8 @@ export default function Searcher() {
         //here we remove empty strings and we extract the keywords
         const arr2 = arr.filter((text) => text !== '');
 
-        changeParamsAction('?keywords=' + arr2.join('-'));
-
-        router.push('/seminuevos?keywords=' + arr2.join('-'));
+        if(pathname === '/seminuevos') setKeywordsParamsAction(arr2.join('-'));
+        if(pathname !== '/seminuevos') router.push('/seminuevos?keywords=' + arr2.join('-'));
     }
 
     return (
