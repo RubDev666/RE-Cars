@@ -16,13 +16,14 @@ import { useCarsActions } from "@/hooks/useCarsActions";
 export default function PreOwned() {
     const [loadingPage, setLoadingPage] = useState(true);
     const [tagsParams, setTags] = useState<TagParam[]>([]);
+    //const [carsStatus, setCarsStatus] = useState<'loading' | 'succes' | 'not results'>('loading');
     const [queryParams, setQueryParams] = useState<URLSearchParams>(new URLSearchParams(''));
 
     const pathname = usePathname();
     const router = useRouter();
 
-    const { fetchStatus, cars, filterCars, params: keywordsInput, UIFilters: {showFilters, modalFilters} } = useCarsSelectors();
-    const { setKeywordsParamsAction, setUIFiltersAction } = useCarsActions();
+    const { fetchStatus, cars, keywordsParams, UIFilters: {showFilters, modalFilters}, carsStatus } = useCarsSelectors();
+    const { setKeywordsParamsAction, setUIFiltersAction, getCarsAction, setFetchStatusAction } = useCarsActions();
 
     useEffect(() => {
         setQueryParams(new URLSearchParams(window.location.search));
@@ -46,19 +47,15 @@ export default function PreOwned() {
     }, [])
 
     useEffect(() => {
-        if(keywordsInput !== '') createQueryString('keywords', keywordsInput);
-    }, [keywordsInput])
+        if(keywordsParams !== '') createQueryString('keywords', keywordsParams);
+    }, [keywordsParams])
 
     useEffect(() => {
-        getTagParams();
+        const order = queryParams.get('order');
 
-        if(!loadingPage) {
-            const order = queryParams.get('order');
-    
+        if(!loadingPage) {    
             if(!order) setUIFiltersAction({key: 'orderOption', value: ''});
             if(order) setUIFiltersAction({key: 'orderOption', value: order});
-
-            router.push('/seminuevos?' + queryParams.toString());
 
             getCars();
         }
@@ -75,18 +72,29 @@ export default function PreOwned() {
     }, [modalFilters])
 
     const getCars = async () => {
-        if(!apiUrl) return;
+        if (!apiUrl) return;
 
-        if(queryParams.toString() === '') {
+        console.log(carsStatus);
+
+        if (queryParams.toString() === '') {
             const cars = await fetch(apiUrl).then(res => res.json());
 
-            console.log(cars);
+            getCarsAction(cars.cars);
         } else {
             const url = apiUrl + '?' + queryParams.toString();
             const cars = await fetch(url).then(res => res.json());
 
-            console.log(cars);
+            getCarsAction(cars.cars);
         }
+
+        getTagParams();
+
+        window.scrollTo({
+            top: 0,
+            left: 0,
+        });
+
+        router.push('/seminuevos?' + queryParams.toString(), { scroll: true });
     }
 
     const createQueryString = useCallback(
@@ -164,6 +172,8 @@ export default function PreOwned() {
     }
 
     const resetFilters = () => {
+        if(queryParams.toString() === '') return;
+
         setQueryParams(new URLSearchParams(''));
         setKeywordsParamsAction('');
         setUIFiltersAction({key: 'orderOption', value: ''});
@@ -173,9 +183,9 @@ export default function PreOwned() {
         <>
             <FiltersHeader resetFilters={resetFilters} btnOrder={btnOrder} />
 
-            {((fetchStatus === 'loading' && loadingPage) || (fetchStatus === 'loading' && !loadingPage) || (fetchStatus === 'completed' && loadingPage)) && <Spinner />}
+            {((fetchStatus === 'loading' && loadingPage) || (fetchStatus === 'loading' && !loadingPage) || (fetchStatus === 'completed' && loadingPage) || carsStatus === 'loading') && <Spinner />}
 
-            {(fetchStatus === 'completed' && !loadingPage) && (
+            {((fetchStatus === 'completed' && !loadingPage) && carsStatus !== 'loading') && (
                 <div className={`cars-filters-container relative grid-layout-${showFilters ? 'actived' : 'disabled'}`}>
                     {(showFilters) && (
                         <div className="filters-container">
@@ -207,11 +217,13 @@ export default function PreOwned() {
                             ))}
                         </div>
 
-                        {filterCars.length === 0 && <Error title="No encontramos autos relacionados a tu búsqueda." message="Ajusta los filtros y encuentra otras opciones." />}
+                        {carsStatus === 'not results' && <Error title="No encontramos autos relacionados a tu búsqueda." message="Ajusta los filtros y encuentra otras opciones." />}
 
-                        {filterCars.length > 0 && (
+                        {/*carsStatus === 'loading' && <Spinner />*/}
+
+                        {carsStatus === 'succes' && (
                             <div className={`cars-container ${showFilters ? 'grid-filters-actived' : 'grid-filters-disabled'}`}>
-                                {filterCars.map((car) => (
+                                {cars.map((car) => (
                                     <CarComponent car={car} key={car.id} />
                                 ))}
                             </div>

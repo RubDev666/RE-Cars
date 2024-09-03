@@ -15,17 +15,12 @@ export const fetchStatusSelect = createSelector(
     (state) => state.fetchStatus
 )
 
-export const filterCarsSelect = createSelector(
-    [selectState],
-    (state) => state.filtersCars
-)
-
 export const filterOptionsSelect = createSelector(
     [selectState],
     (state) => state.filtersOptions
 )
 
-export const paramsSelect = createSelector(
+export const keywordsParamsSelect = createSelector(
     [selectState],
     (state) => state.keywordsParams
 )
@@ -33,4 +28,9 @@ export const paramsSelect = createSelector(
 export const UIFiltersSelect = createSelector(
     [selectState],
     (state) => state.UIFilters
+)
+
+export const carsStatusSelect = createSelector(
+    [selectState],
+    (state) => state.carsStatus
 )

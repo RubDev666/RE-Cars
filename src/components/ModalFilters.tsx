@@ -35,11 +35,10 @@ export default function ModalFilters({ createURL, params, setTags, tagsParams }:
 
         const p = params.get(key);
 
-        let tag = tagsParams;
+        let tag = [...tagsParams];
 
         if (!p) {
             tag.push({key, value: text});
-            setTags(tag);
 
             createURL(key, text);
 
@@ -48,7 +47,6 @@ export default function ModalFilters({ createURL, params, setTags, tagsParams }:
 
         if (!p.includes(text)) {           
             tag.push({key, value: text});
-            setTags(tag);
 
             createURL(key, p + '-' + text);
         }

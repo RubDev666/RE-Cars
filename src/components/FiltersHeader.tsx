@@ -11,7 +11,7 @@ import { faAngleDown, faAngleUp, faFilter } from '@fortawesome/free-solid-svg-ic
 const orderOptions = ['Mayor precio', 'Menor precio', 'Más antiguos', 'Más recientes'];
 
 export default function FiltersHeader({resetFilters, btnOrder}: FiltersHeaderProps) {
-    const {filterCars, UIFilters: {showFilters, openOrderOptions, orderOption}} = useCarsSelectors();
+    const {UIFilters: {showFilters, openOrderOptions, orderOption}, cars} = useCarsSelectors();
     const {setUIFiltersAction} = useCarsActions();
 
     return (
@@ -23,7 +23,7 @@ export default function FiltersHeader({resetFilters, btnOrder}: FiltersHeaderPro
 
                 <button className="btn-clean color-4" onClick={resetFilters}>Limpiar</button>
 
-                <p className="results color-4">{filterCars.length} Resultados</p>
+                <p className="results color-4">{cars.length} Resultados</p>
 
                 <div className="order-options-preowned relative">
                     <button className="btn-order" onClick={() => setUIFiltersAction({key: 'openOrderOptions', value: !openOrderOptions})}>
