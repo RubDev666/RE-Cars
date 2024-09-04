@@ -16,7 +16,7 @@ export const orderF = (currentArr: Car[], option: string): Car[] => {
     return newOrder;
 }
 
-export function extractData(cars: Car[] | []): FilterOptions {
+export function extractData(cars: Car[]): FilterOptions {
     let y = [];
 
     let brands: Set<string> = new Set();

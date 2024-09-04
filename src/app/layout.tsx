@@ -7,8 +7,6 @@ import { apiUrl } from "@/utils/globalVariables";
 import "./globals.scss";
 import "../styles/index.scss";
 
-//import { getCars } from "@/lib/actions/cars.actions";
-
 import { Providers } from "@/store/Providers";
 
 import { config } from '@fortawesome/fontawesome-svg-core';
@@ -26,8 +24,9 @@ async function getCars() {
     try {
         if (!apiUrl) return undefined;
 
-        const data: { cars: Car[] } = await fetch(apiUrl).then(res => res.json());
+        const data: {cars: Car[]} = await fetch(apiUrl).then(res => res.json());
 
+        console.log(data);
         return data;
     } catch (error) {
         return undefined;

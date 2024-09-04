@@ -71,14 +71,13 @@ export default function PreOwned() {
         if (!apiUrl) return;
 
         if (searchParams.toString() === '') {
-            const cars = await fetch(apiUrl).then(res => res.json());
+            const res = await fetch(apiUrl).then(res => res.json());
 
-            getCarsAction(cars.cars);
+            getCarsAction(res.cars);
         } else {
-            const url = apiUrl + '?' + searchParams.toString();
-            const cars = await fetch(url).then(res => res.json());
+            const res = await fetch(apiUrl + '?' + searchParams.toString()).then(res => res.json());
 
-            getCarsAction(cars.cars);
+            getCarsAction(res.cars);
         }
 
         getTagParams();

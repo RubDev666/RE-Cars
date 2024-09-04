@@ -37,25 +37,11 @@ export async function GET(request: NextRequest) {
 
     mainKeyQueryParams.forEach((key: MainKeyQueryParams) => {
         const values = searchParams.get(key);
-
+    
         if (values) {
-            if (values.includes('-')) {
-                const paramValues = values.split('-');
+            const paramValues = values.split('-');
 
-                let preFilter: Car[] = [];
-
-                for (let value of paramValues) {
-                    const newFilters = allFilters.filter((car: Car) => car[key].toString().toLowerCase() === value);
-
-                    for (let item of newFilters) {
-                        preFilter.push(item);
-                    }
-                }
-
-                allFilters = preFilter;
-            } else {
-                allFilters = allFilters.filter((car: Car) => car[key].toString().toLowerCase() === values);
-            }
+            allFilters = allFilters.filter(car => paramValues.includes(car[key].toString().toLowerCase()));
         }
     });
 
