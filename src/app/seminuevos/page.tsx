@@ -1,5 +1,6 @@
 import PreOwned from "@/pageComponents/PreOwned";
-import { Searcher } from "@/components";
+import { Searcher, Spinner } from "@/components";
+import { Suspense } from "react";
 
 export const metadata = {
     title: 'RE Autos | Seminuevos',
@@ -13,7 +14,9 @@ export default function Page() {
                 <Searcher />
             </div>
 
-            <PreOwned />
+            <Suspense fallback={<Spinner />}>
+                <PreOwned />
+            </Suspense>
         </div>
     )
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 import { Car as CarComponent, ModalFilters, Spinner, Error, FiltersHeader } from "@/components";
 import { TagParam, MainKeyQueryParams, AllKeyQueryParams } from "@/types";
@@ -16,18 +16,14 @@ import { useCarsActions } from "@/hooks/useCarsActions";
 export default function PreOwned() {
     const [loadingPage, setLoadingPage] = useState(true);
     const [tagsParams, setTags] = useState<TagParam[]>([]);
-    //const [carsStatus, setCarsStatus] = useState<'loading' | 'succes' | 'not results'>('loading');
-    const [queryParams, setQueryParams] = useState<URLSearchParams>(new URLSearchParams(''));
 
-    const pathname = usePathname();
     const router = useRouter();
+    const searchParams = useSearchParams();
 
     const { fetchStatus, cars, keywordsParams, UIFilters: {showFilters, modalFilters}, carsStatus } = useCarsSelectors();
     const { setKeywordsParamsAction, setUIFiltersAction, getCarsAction, setFetchStatusAction } = useCarsActions();
 
     useEffect(() => {
-        setQueryParams(new URLSearchParams(window.location.search));
-
         setLoadingPage(false);
 
         if (window.innerWidth >= 1024) {
@@ -47,11 +43,7 @@ export default function PreOwned() {
     }, [])
 
     useEffect(() => {
-        if(keywordsParams !== '') createQueryString('keywords', keywordsParams);
-    }, [keywordsParams])
-
-    useEffect(() => {
-        const order = queryParams.get('order');
+        const order = searchParams.get('order');
 
         if(!loadingPage) {    
             if(!order) setUIFiltersAction({key: 'orderOption', value: ''});
@@ -59,7 +51,11 @@ export default function PreOwned() {
 
             getCars();
         }
-    }, [queryParams])
+    }, [searchParams, loadingPage])
+
+    useEffect(() => {
+        if(keywordsParams !== '') createQueryString('keywords', keywordsParams);
+    }, [keywordsParams])
 
     useEffect(() => {
         const body = document.getElementsByTagName('body');
@@ -74,14 +70,12 @@ export default function PreOwned() {
     const getCars = async () => {
         if (!apiUrl) return;
 
-        console.log(carsStatus);
-
-        if (queryParams.toString() === '') {
+        if (searchParams.toString() === '') {
             const cars = await fetch(apiUrl).then(res => res.json());
 
             getCarsAction(cars.cars);
         } else {
-            const url = apiUrl + '?' + queryParams.toString();
+            const url = apiUrl + '?' + searchParams.toString();
             const cars = await fetch(url).then(res => res.json());
 
             getCarsAction(cars.cars);
@@ -93,13 +87,11 @@ export default function PreOwned() {
             top: 0,
             left: 0,
         });
-
-        router.push('/seminuevos?' + queryParams.toString(), { scroll: true });
     }
 
     const createQueryString = useCallback(
         (key: AllKeyQueryParams, value: string) => {
-            let currentParams = new URLSearchParams(queryParams);
+            let currentParams = new URLSearchParams(searchParams.toString());
 
             if(key === 'keywords') mainKeyQueryParams.forEach(key => currentParams.delete(key));
 
@@ -108,9 +100,9 @@ export default function PreOwned() {
 
             if (key !== 'order' && key !== 'keywords') currentParams.delete('keywords');
 
-            setQueryParams(currentParams);
+            router.push('/seminuevos?' + currentParams.toString(), { scroll: false });
         },
-        [queryParams]
+        [searchParams]
     )
 
     const btnOrder = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -125,7 +117,8 @@ export default function PreOwned() {
     const getTagParams = () => {
         let newTags: TagParam[] = [];
 
-        const keywords = queryParams.get('keywords');
+        console.log(searchParams.toString())
+        const keywords = searchParams.get('keywords');
 
         //avoid iterating the rest of the parameters if this is active
         if (keywords) {
@@ -139,7 +132,7 @@ export default function PreOwned() {
         }
 
         mainKeyQueryParams.forEach((key: MainKeyQueryParams) => {
-            const values = queryParams.get(key);
+            const values = searchParams.get(key);
 
             if (values) {
                 const extract = values.split('-');
@@ -152,7 +145,7 @@ export default function PreOwned() {
     }
 
     const deleteParam = (tag: TagParam) => {
-        const currentParams = new URLSearchParams(queryParams);
+        const currentParams = new URLSearchParams(searchParams);
 
         const p = currentParams.get(tag.key);
 
@@ -168,13 +161,12 @@ export default function PreOwned() {
 
         if(!currentParams.get('keywords')) setKeywordsParamsAction('');
 
-        setQueryParams(currentParams);
+        router.push('/seminuevos?' + currentParams.toString());
     }
 
     const resetFilters = () => {
-        if(queryParams.toString() === '') return;
-
-        setQueryParams(new URLSearchParams(''));
+        if(searchParams.toString() === '') return;
+        router.push('/seminuevos');
         setKeywordsParamsAction('');
         setUIFiltersAction({key: 'orderOption', value: ''});
     }
@@ -196,7 +188,7 @@ export default function PreOwned() {
                             {modalFilters && (
                                 <ModalFilters
                                     createURL={createQueryString}
-                                    params={queryParams}
+                                    params={searchParams}
                                     setTags={setTags}
                                     tagsParams={tagsParams}
                                 />

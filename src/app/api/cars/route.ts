@@ -14,36 +14,25 @@ export async function GET(request: NextRequest) {
 
     const keywords = searchParams.get('keywords');
     const order = searchParams.get('order');
-    const brands = searchParams.get('brand');
-    const doors = searchParams.get('doors');
-    const colors = searchParams.get('color');
-    const transmission = searchParams.get('transmission');
-    const years = searchParams.get('year');
 
-    let allFilters = CARS_DB;
+    let allFilters = [...CARS_DB];
 
     if (keywords) {
         const extract = keywords.split('-');
 
-        let preFilter: Car[] = [];
-        let idCars: string[] = [];
+        let preFilter: Set<Car> = new Set([]);
 
         //to access the car properties without validating
         type CarProperties = MainKeyQueryParams | 'model';
         const carProperties: CarProperties[] = [...mainKeyQueryParams, 'model'];
 
-        extract.forEach((e: string) => {
-            for (let i = 0; i < carProperties.length; i++) {
-                for (let car of allFilters) {
-                    if (car[carProperties[i]].toString().toLowerCase().includes(e.toLowerCase()) && !idCars.includes(car.id)) {
-                        preFilter.push(car);
-                        idCars.push(car.id);
-                    }
-                }
-            }
-        })
+        extract.forEach(e => {
+            allFilters.forEach(car => {
+                if (carProperties.some(prop => car[prop].toString().toLowerCase().includes(e.toLowerCase()))) preFilter.add(car);
+            });
+        });
 
-        allFilters = preFilter;
+        allFilters = [...preFilter];
     }
 
     mainKeyQueryParams.forEach((key: MainKeyQueryParams) => {
