@@ -170,57 +170,55 @@ export default function PreOwned() {
         setUIFiltersAction({key: 'orderOption', value: ''});
     }
 
+    if(((fetchStatus === 'loading' && loadingPage) || (fetchStatus === 'loading' && !loadingPage) || (fetchStatus === 'completed' && loadingPage) || carsStatus === 'loading')) return <Spinner />;
+
+    if(fetchStatus === 'error') return <Error title="Error inesperado" message="Vuelva a cargar la pagina o intentelo mas tarde." />;
+
     return (
         <>
             <FiltersHeader resetFilters={resetFilters} btnOrder={btnOrder} />
 
-            {((fetchStatus === 'loading' && loadingPage) || (fetchStatus === 'loading' && !loadingPage) || (fetchStatus === 'completed' && loadingPage) || carsStatus === 'loading') && <Spinner />}
+            <div className={`cars-filters-container relative grid-layout-${showFilters ? 'actived' : 'disabled'}`}>
+                {(showFilters) && (
+                    <div className="filters-container">
+                        <button className="p-family btn-open pointer" onClick={() => setUIFiltersAction({ key: 'modalFilters', value: !modalFilters })}>
+                            + Filtros
+                        </button>
 
-            {((fetchStatus === 'completed' && !loadingPage) && carsStatus !== 'loading') && (
-                <div className={`cars-filters-container relative grid-layout-${showFilters ? 'actived' : 'disabled'}`}>
-                    {(showFilters) && (
-                        <div className="filters-container">
-                            <button className="p-family btn-open pointer" onClick={() => setUIFiltersAction({key: 'modalFilters', value: !modalFilters})}>
-                                + Filtros
-                            </button>
-
-                            {modalFilters && (
-                                <ModalFilters
-                                    createURL={createQueryString}
-                                    params={searchParams}
-                                    tagsParams={tagsParams}
-                                />
-                            )}
-                        </div>
-                    )}
-
-                    <div className="cars-remove-container">
-                        <div className={`delete-filters-container ${tagsParams.length > 0 ? 'margin-top' : ''}`}>
-                            {tagsParams.map((tag: TagParam) => (
-                                <button
-                                    key={`${tag.key + '=' + tag.value}`}
-                                    className="p-family all-center"
-                                    onClick={() => deleteParam(tag)}
-                                >
-                                    {tag.value} <FontAwesomeIcon icon={faTimes} className="icon color-1" onClick={() => deleteParam(tag)} />
-                                </button>
-                            ))}
-                        </div>
-
-                        {carsStatus === 'not results' && <Error title="No encontramos autos relacionados a tu búsqueda." message="Ajusta los filtros y encuentra otras opciones." />}
-
-                        {carsStatus === 'succes' && (
-                            <div className={`cars-container ${showFilters ? 'grid-filters-actived' : 'grid-filters-disabled'}`}>
-                                {cars.map((car) => (
-                                    <CarComponent car={car} key={car.id} />
-                                ))}
-                            </div>
+                        {modalFilters && (
+                            <ModalFilters
+                                createURL={createQueryString}
+                                params={searchParams}
+                                tagsParams={tagsParams}
+                            />
                         )}
                     </div>
-                </div>
-            )}
+                )}
 
-            {(fetchStatus === 'error') && <Error title="Error inesperado" message="Vuelva a cargar la pagina o intentelo mas tarde." />}
+                <div className="cars-remove-container">
+                    <div className={`delete-filters-container ${tagsParams.length > 0 ? 'margin-top' : ''}`}>
+                        {tagsParams.map((tag: TagParam) => (
+                            <button
+                                key={`${tag.key + '=' + tag.value}`}
+                                className="p-family all-center"
+                                onClick={() => deleteParam(tag)}
+                            >
+                                {tag.value} <FontAwesomeIcon icon={faTimes} className="icon color-1" onClick={() => deleteParam(tag)} />
+                            </button>
+                        ))}
+                    </div>
+
+                    {carsStatus === 'not results' && <Error title="No encontramos autos relacionados a tu búsqueda." message="Ajusta los filtros y encuentra otras opciones." />}
+
+                    {carsStatus === 'succes' && (
+                        <div className={`cars-container ${showFilters ? 'grid-filters-actived' : 'grid-filters-disabled'}`}>
+                            {cars.map((car) => (
+                                <CarComponent car={car} key={car.id} />
+                            ))}
+                        </div>
+                    )}
+                </div>
+            </div>
         </>
     )
 }
