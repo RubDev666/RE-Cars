@@ -209,5 +209,115 @@ export const CARS_DB: Car[] = [
         color: 'Azul',
         transmission: 'automatico',
         urlImage: 'https://res.cloudinary.com/dkav9fvlo/image/upload/v1696397043/Venta%20de%20autos%20-%20Proyecto/HD-wallpaper-2016-audi-a4-2-tfsi-quattro-ara-blue-crystal-effect-front-car_txikm7.jpg'
+    },
+    {
+        id: "20",
+        brand: 'Nissan',
+        model: 'Versa',
+        year: 2021,
+        price: 38000,
+        doors: 4,
+        color: 'naranja',
+        transmission: 'automatico',
+        urlImage: 'https://res.cloudinary.com/dkav9fvlo/image/upload/v1725547908/Venta%20de%20autos%20-%20Proyecto/xyksfauhcrhc0jxctwsn.webp'
+    },
+    {
+        id: "21",
+        brand: 'Ford',
+        model: 'Ranger',
+        year: 2021,
+        price: 43000,
+        doors: 4,
+        color: 'negro',
+        transmission: 'manual',
+        urlImage: 'https://res.cloudinary.com/dkav9fvlo/image/upload/v1725548330/Venta%20de%20autos%20-%20Proyecto/cbyhk6oyx1t328p1abzy.jpg'
+    },
+    {
+        id: "22",
+        brand: 'Ford',
+        model: 'Mustang',
+        year: 2021,
+        price: 94000,
+        doors: 2,
+        color: 'azul',
+        transmission: 'manual',
+        urlImage: 'https://res.cloudinary.com/dkav9fvlo/image/upload/v1725548715/Venta%20de%20autos%20-%20Proyecto/g46gnasxunitmg5mrhw4.jpg'
+    },
+    {
+        id: "23",
+        brand: 'Lincoln',
+        model: 'Corsair',
+        year: 2021,
+        price: 99000,
+        doors: 4,
+        color: 'blanco',
+        transmission: 'automatico',
+        urlImage: 'https://res.cloudinary.com/dkav9fvlo/image/upload/v1725548908/Venta%20de%20autos%20-%20Proyecto/grjtjhe1wshvbe1luajv.webp'
+    },
+    {
+        id: "24",
+        brand: 'Nissan',
+        model: 'X-Trail',
+        year: 2022,
+        price: 79000,
+        doors: 4,
+        color: 'beige',
+        transmission: 'automatico',
+        urlImage: 'https://res.cloudinary.com/dkav9fvlo/image/upload/v1725549232/Venta%20de%20autos%20-%20Proyecto/qiv3nxh03xequcjygabu.jpg'
+    },
+    {
+        id: "25",
+        brand: 'Chevrolet',
+        model: 'Groove',
+        year: 2022,
+        price: 85000,
+        doors: 4,
+        color: 'rojo',
+        transmission: 'automatico',
+        urlImage: 'https://res.cloudinary.com/dkav9fvlo/image/upload/v1725549393/Venta%20de%20autos%20-%20Proyecto/tyx2f8dl2zoeplftchmj.jpg'
+    },
+    {
+        id: "26",
+        brand: 'Chevrolet',
+        model: 'Aveo',
+        year: 2022,
+        price: 48000,
+        doors: 4,
+        color: 'gris',
+        transmission: 'manual',
+        urlImage: 'https://res.cloudinary.com/dkav9fvlo/image/upload/v1725549618/Venta%20de%20autos%20-%20Proyecto/h4gxqvhhge9kw3fkyozg.webp'
+    },
+    {
+        id: "27",
+        brand: 'Mazda',
+        model: 'Mx-5',
+        year: 2022,
+        price: 61000,
+        doors: 2,
+        color: 'blanco',
+        transmission: 'manual',
+        urlImage: 'https://res.cloudinary.com/dkav9fvlo/image/upload/v1725549770/Venta%20de%20autos%20-%20Proyecto/uuuncwbbfufou23c8qjf.jpg'
+    },
+    {
+        id: "28",
+        brand: 'Dodge',
+        model: 'Attitude',
+        year: 2023,
+        price: 67000,
+        doors: 4,
+        color: 'red',
+        transmission: 'automatico',
+        urlImage: 'https://res.cloudinary.com/dkav9fvlo/image/upload/v1725550079/Venta%20de%20autos%20-%20Proyecto/x2jyxnus9zzv3cqroqew.webp'
+    },
+    {
+        id: "29",
+        brand: 'Jeep',
+        model: 'Compass',
+        year: 2023,
+        price: 96000,
+        doors: 4,
+        color: 'gris',
+        transmission: 'automatico',
+        urlImage: 'https://res.cloudinary.com/dkav9fvlo/image/upload/v1725550384/Venta%20de%20autos%20-%20Proyecto/wntwdb8takltr48cxyzk.jpg'
     }
 ]
