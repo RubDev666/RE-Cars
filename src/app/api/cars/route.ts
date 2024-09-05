@@ -7,6 +7,8 @@ import { orderF } from "@/store/utilities";
 import type { Car, MainKeyQueryParams } from "@/types";
 //import { NextResponse } from "next/server";
 
+export const revalidate = 60;
+
 export async function GET(request: NextRequest) {
     const searchParams = request.nextUrl.searchParams;
 
