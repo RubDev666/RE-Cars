@@ -1,13 +1,17 @@
-import Header from "./Header";
-import Searcher from "./Searcher";
-import SearchFiltersCont from "./SearchFiltersCont";
-import Slider from "./Slider";
-import Spinner from "./Spinner";
-import Footer from "./Footer";
-import ModalFilters from "./ModalFilters";
-import Car from "./Car";
-import Error from "./Error";
-import FiltersHeader from "./FiltersHeader";
+import Header from "./header/Header";
+import Searcher from "./header/Searcher";
+
+import Slider from "./lib/Slider";
+import Spinner from "./lib/Spinner";
+
+import Car from "./ui/Car";
+import Error from "./ui/Error";
+import Footer from "./ui/Footer";
+import Skeleton from "./ui/Skeleton";
+
+import FiltersHeader from "./filters/FiltersHeader";
+import ModalFilters from "./filters/ModalFilters";
+import SearchFiltersCont from "./filters/SearchFiltersCont";
 
 export {
     Header,
@@ -19,5 +23,6 @@ export {
     ModalFilters,
     Car,
     Error,
-    FiltersHeader
+    FiltersHeader,
+    Skeleton
 }

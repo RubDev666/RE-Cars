@@ -19,7 +19,3 @@ export type InitialState = {
     UIFilters: Record<UIFilterOptions, UIFilterValues>;
     carsStatus: CarsStatus;
 }
-
-export type Params = {
-    params: URLSearchParams;
-}

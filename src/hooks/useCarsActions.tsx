@@ -1,9 +1,9 @@
 import { useDispatch } from "react-redux";
 import type { AppDispatch } from "@/store";
 
-import { getCars, getFilterOptions, setFetchStatus, setKeywordsParams, setUIFilters, setCarsStatus } from "@/store/cars/cars-slice";
-import { Car } from "@/types";
-import { CarsStatus, FetchStatus, Params, UIFilterPayload } from "@/types/storeTypes";
+import { getCars, getFilterOptions, setFetchStatus, setKeywordsParams, setUIFilters, setCarsStatus } from "@/store/cars/cars.slice";
+import type { Car } from "@/types";
+import type { CarsStatus, FetchStatus, UIFilterPayload } from "@/types/storeTypes";
 
 export const useCarsActions = () => {
     const useAppDispatch: () => AppDispatch = useDispatch; 

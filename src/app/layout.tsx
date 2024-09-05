@@ -26,7 +26,6 @@ async function getCars() {
 
         const data: {cars: Car[]} = await fetch(apiUrl).then(res => res.json());
 
-        console.log(data);
         return data;
     } catch (error) {
         return undefined;

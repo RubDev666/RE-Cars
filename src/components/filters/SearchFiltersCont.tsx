@@ -3,29 +3,18 @@
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 
-import Searcher from "./Searcher";
+import { Searcher } from '@/components';
 
 import { SearchFiltersProps } from "@/types";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-    faAngleDown,
-    faAngleUp,
-    faAngleRight,
-    faArrowLeft
-} from '@fortawesome/free-solid-svg-icons';
+import {faAngleDown, faAngleUp, faAngleRight, faArrowLeft} from '@fortawesome/free-solid-svg-icons';
 
 import { useCarsSelectors } from "@/hooks/useCarsSelectors";
-import Skeleton from "./Skeleton";
 
-const optionsKey = {
-    keyBrand: 'marca',
-    keyYear: 'año',
-    keyDoors: 'puertas',
-    keyTransmission: 'transmision'
-}
+import { optionsType, optionsKey } from "@/utils/globalVariables";
 
-const optionsType: string[] = Object.values(optionsKey);
+import { Skeleton } from '@/components';
 
 export default function SearchFiltersCont({ openMenu, currentOption, setCurrentOption }: SearchFiltersProps) {
     const pathname = usePathname();

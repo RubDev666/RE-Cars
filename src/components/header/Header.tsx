@@ -31,7 +31,7 @@ export default function Header({ data }: { data: { cars: Car[] } | undefined }) 
 
     const pathname = usePathname();
 
-    const { getCarsAction, getFilterOptionsAction, setKeywordsParamsAction, setCarsStatusAction } = useCarsActions();
+    const { getFilterOptionsAction, setKeywordsParamsAction, setCarsStatusAction } = useCarsActions();
 
     useEffect(() => {
         getFilterOptionsAction(data?.cars);

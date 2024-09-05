@@ -28,20 +28,21 @@ export type FilterOptions = {
     transmissions: string[];
 }
 
-export type Options = {
-    [keyFil: string]: {
-        bool: boolean,
-        set: Dispatch<SetStateAction<boolean>>,
-        keyUI: string,
-        options: string[] | number[]
-    }
+type Options<T> = {
+    bool: boolean;
+    set: Dispatch<SetStateAction<boolean>>;
+    keyUI: string;
+    options: T[];
+}
+
+export type AccordionOptions = {
+    [keyAccordion: string]: Options<string | number>;
 }
 
 export type ModalProps = {
     createURL: (key: AllKeyQueryParams, value: string) => void;
     params: URLSearchParams;
     tagsParams: TagParam[];
-    setTags: Dispatch<SetStateAction<TagParam[]>>;
 }
 
 export type SearchFiltersProps = {

@@ -8,7 +8,7 @@ import { useCarsActions } from '@/hooks/useCarsActions';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown, faAngleUp, faFilter } from '@fortawesome/free-solid-svg-icons';
 
-const orderOptions = ['Mayor precio', 'Menor precio', 'Más antiguos', 'Más recientes'];
+import { orderOptions } from '@/utils/globalVariables';
 
 export default function FiltersHeader({resetFilters, btnOrder}: FiltersHeaderProps) {
     const {UIFilters: {showFilters, openOrderOptions, orderOption}, cars} = useCarsSelectors();
@@ -21,7 +21,7 @@ export default function FiltersHeader({resetFilters, btnOrder}: FiltersHeaderPro
                     <FontAwesomeIcon icon={faFilter} className="icon" /> {showFilters ? 'ocultar filtros' : 'mostrar filtros'}
                 </button>
 
-                <button className="btn-clean color-4" onClick={resetFilters}>Limpiar</button>
+                <button className="btn-clean color-4 pointer" onClick={resetFilters}>Limpiar</button>
 
                 <p className="results color-4">{cars.length} Resultados</p>
 

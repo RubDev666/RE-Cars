@@ -6,12 +6,12 @@ import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown, faAngleUp,faTimes } from '@fortawesome/free-solid-svg-icons';
 
-import { Options, ModalProps, MainKeyQueryParams } from '@/types';
+import type { AccordionOptions, ModalProps, MainKeyQueryParams } from '@/types';
 import { mainKeyQueryParams } from '@/utils/globalVariables';
 import { useCarsSelectors } from '@/hooks/useCarsSelectors';
 import { useCarsActions } from '@/hooks/useCarsActions';
 
-export default function ModalFilters({ createURL, params, setTags, tagsParams }: ModalProps) {
+export default function ModalFilters({ createURL, params, tagsParams }: ModalProps) {
     const [brandAccor, setBrand] = useState(false);
     const [yearAccor, setYear] = useState(false);
     const [colorAccor, setColor] = useState(false);
@@ -64,8 +64,8 @@ export default function ModalFilters({ createURL, params, setTags, tagsParams }:
                 </div>
 
                 <div className="filters p-family">
-                    {mainKeyQueryParams.map((key) => {
-                        const obj: Options = {
+                    {mainKeyQueryParams.map(key => {
+                        const obj: AccordionOptions = {
                             brand: {
                                 bool: brandAccor,
                                 set: setBrand,
@@ -109,7 +109,7 @@ export default function ModalFilters({ createURL, params, setTags, tagsParams }:
 
                                 {obj[key].bool && (
                                     <div className="options">
-                                        {obj[key].options.map((option: string | number) => (
+                                        {obj[key].options.map(option => (
                                             <button
                                                 className={`capitalize ${getClass(key, option.toString().toLowerCase())}`}
                                                 key={option}

@@ -1,6 +1,6 @@
 import { configureStore, Tuple } from '@reduxjs/toolkit';
 
-import carsSlice from './cars/cars-slice';
+import carsSlice from './cars/cars.slice';
 //import { extractDataMiddleware } from './middlewares';
 
 export const store = configureStore({

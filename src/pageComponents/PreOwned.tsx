@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 import { Car as CarComponent, ModalFilters, Spinner, Error, FiltersHeader } from "@/components";
-import { TagParam, MainKeyQueryParams, AllKeyQueryParams } from "@/types";
+import type { TagParam, MainKeyQueryParams, AllKeyQueryParams } from "@/types";
 import { apiUrl, mainKeyQueryParams } from "@/utils/globalVariables";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -21,7 +21,7 @@ export default function PreOwned() {
     const searchParams = useSearchParams();
 
     const { fetchStatus, cars, keywordsParams, UIFilters: {showFilters, modalFilters}, carsStatus } = useCarsSelectors();
-    const { setKeywordsParamsAction, setUIFiltersAction, getCarsAction, setFetchStatusAction } = useCarsActions();
+    const { setKeywordsParamsAction, setUIFiltersAction, getCarsAction } = useCarsActions();
 
     useEffect(() => {
         setLoadingPage(false);
@@ -116,7 +116,6 @@ export default function PreOwned() {
     const getTagParams = () => {
         let newTags: TagParam[] = [];
 
-        console.log(searchParams.toString())
         const keywords = searchParams.get('keywords');
 
         //avoid iterating the rest of the parameters if this is active
@@ -165,6 +164,7 @@ export default function PreOwned() {
 
     const resetFilters = () => {
         if(searchParams.toString() === '') return;
+
         router.push('/seminuevos');
         setKeywordsParamsAction('');
         setUIFiltersAction({key: 'orderOption', value: ''});
@@ -188,7 +188,6 @@ export default function PreOwned() {
                                 <ModalFilters
                                     createURL={createQueryString}
                                     params={searchParams}
-                                    setTags={setTags}
                                     tagsParams={tagsParams}
                                 />
                             )}
@@ -209,8 +208,6 @@ export default function PreOwned() {
                         </div>
 
                         {carsStatus === 'not results' && <Error title="No encontramos autos relacionados a tu búsqueda." message="Ajusta los filtros y encuentra otras opciones." />}
-
-                        {/*carsStatus === 'loading' && <Spinner />*/}
 
                         {carsStatus === 'succes' && (
                             <div className={`cars-container ${showFilters ? 'grid-filters-actived' : 'grid-filters-disabled'}`}>

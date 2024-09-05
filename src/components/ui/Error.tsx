@@ -1,7 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { 
-    faHeartCrack
-} from '@fortawesome/free-solid-svg-icons';
+import { faHeartCrack } from '@fortawesome/free-solid-svg-icons';
 
 export default function Error({title, message}: {title: string, message: string}) {
     return(

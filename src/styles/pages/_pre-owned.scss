@@ -26,6 +26,13 @@
     font-size: 14px;
     font-weight: 500;
 
+    .btn-clean {
+        background: none;
+        border: none;
+        outline: none;
+        font-weight: 500;
+    }
+
     .btn-clean,
     .btn-toggle-filters {
         display: none;

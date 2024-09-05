@@ -7,27 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleRight, faLocationDot } from '@fortawesome/free-solid-svg-icons';
 
 import { Slider } from "@/components";
-
-type Headquarter = {name: string, addres: string}
-
-const headquarters: Headquarter[] = [
-    {
-        name: "RE AUTOS CDMX",
-        addres: "Carr Amomolulco Ocoyoacac, Estado de México, 52740."
-    },
-    {
-        name: "RE AUTOS Monterrey",
-        addres: "AV Sin nombre 9087, Guadalupe, Monterrey, 52740"
-    },
-    {
-        name: "RE AUTOS Mérida",
-        addres: "Periferico Norte, No.73, Francisco de Montejo, 52740."
-    },
-    {
-        name: "RE AUTOS Guadalajara",
-        addres: "Cristobal Colón 6013, San Pedro Tlaquepaque, Jalisco, 45601."
-    },
-]
+import { headquarters } from "@/utils/globalVariables";
 
 export default function Home() {
     return (
@@ -93,7 +73,7 @@ export default function Home() {
                 <h3 className="t-family">¡Visita nuestras sedes y conócenos!</h3>
 
                 <div className="headquarters-container p-family">
-                    {headquarters.map((headquarter: Headquarter) => (
+                    {headquarters.map(headquarter => (
                         <div className="headquarter" key={headquarter.name}>
                             <FontAwesomeIcon icon={faLocationDot} className="icon color-1" />
 

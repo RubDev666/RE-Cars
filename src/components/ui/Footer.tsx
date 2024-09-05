@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBolt } from '@fortawesome/free-solid-svg-icons';
 
-const socialIcons = ['facebook', 'instagram', 'youtube', 'twitter', 'pinterest', 'linkedin', 'tiktok']
+import { socialIcons } from '@/utils/globalVariables';
 
 export default function Footer() {
     return(

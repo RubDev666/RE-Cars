@@ -1,10 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
-import { Car } from '@/types';
+import type { Car } from '@/types';
 import type { InitialState, FetchStatus, UIFilterPayload, CarsStatus } from '@/types/storeTypes';
 
-import { extractData} from '../utilities';
+import { extractData } from '../utilities';
 
 const initialState: InitialState = {
     cars: [],
