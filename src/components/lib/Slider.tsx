@@ -64,7 +64,7 @@ export default function Slider() {
     }, [])
 
     return (
-        <section id="slider-main">
+        <section id="slider-main" role='slider'>
             <h2 className='t-family'>7 razones para comprar un auto en <span className="italic">RE AUTOS</span></h2>
 
             {!slider && <Spinner />}
