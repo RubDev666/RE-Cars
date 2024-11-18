@@ -37,10 +37,12 @@ export default function Searcher() {
             onSelect={() => setFormOnSelect(true)}
             onBlur={() => setFormOnSelect(false)}
             className={`all-center ${formOnSelect ? 'border-active' : 'border-disabled'}`}
+            role="form"
         >
             <label
                 htmlFor='filter'
                 onClick={() => setFormOnSelect(true)}
+                data-testid="label-search"
             >
                 <button type='submit' id="btn-subtmit" aria-label="btn-submit">
                     <FontAwesomeIcon icon={faMagnifyingGlass} className={`search-icon ${formOnSelect ? 'icon-active' : 'icon-disabled'}`} />

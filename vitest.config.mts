@@ -7,6 +7,7 @@ export default defineConfig({
     plugins: [tsconfigPaths(), react()],
     test: {
         environment: 'jsdom',
+        setupFiles: "./tests/setUp.tsx"
     },
     resolve: { 
         alias: { 
