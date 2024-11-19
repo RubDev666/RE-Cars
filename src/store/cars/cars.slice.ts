@@ -6,7 +6,7 @@ import type { InitialState, FetchStatus, UIFilterPayload, CarsStatus } from '@/t
 
 import { extractData } from '../utilities';
 
-const initialState: InitialState = {
+export const initialState: InitialState = {
     cars: [],
     filtersOptions: {
         brands: [],
