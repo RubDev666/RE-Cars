@@ -10,14 +10,15 @@ import { SearchFiltersCont } from "@/components";
 
 import * as nextNavigation from 'next/navigation';
 
-vi.mock('next/navigation', () => ({
+/*vi.mock('next/navigation', () => ({
     usePathname: () => '/',
     useRouter: () => ({
         push: vi.fn()
     })
-}))
+}))*/
+vi.mock('next/navigation');
 
-vi.mock('@fortawesome/react-fontawesome', () => ({ 
+/*vi.mock('@fortawesome/react-fontawesome', () => ({ 
     FontAwesomeIcon: ({className, icon, onClick}: {className: string | undefined, icon: any, onClick: () => void}) => {
         //console.log(icon.iconName);
 
@@ -25,7 +26,9 @@ vi.mock('@fortawesome/react-fontawesome', () => ({
             <span className={className + ' ' + icon.iconName} onClick={onClick} >FontAwesomeIconMock</span> 
         )
     }
-}));
+}));*/
+
+vi.mock('@fortawesome/react-fontawesome');
 
 vi.mock('@/components', {spy: true});
 

@@ -3,9 +3,7 @@ import { render, screen } from '@testing-library/react';
 
 import { Error } from '@/components';
 
-vi.mock('@fortawesome/react-fontawesome', () => ({ 
-    FontAwesomeIcon: () => <span>FontAwesomeIconMock</span> 
-}));
+vi.mock('@fortawesome/react-fontawesome');
 
 afterAll(() => {
     vi.clearAllMocks();
@@ -23,7 +21,7 @@ describe('Error({title, message}: {title: string, message: string})', () => {
         const mainDiv = screen.getByRole('alert');
         const h1 = screen.getByText(titleExpect);
         const p = screen.getByText(messageExpect);
-        const FontAwesomeIconMock = screen.getByText('FontAwesomeIconMock');
+        const FontAwesomeIconMock = document.querySelector('.error-icon') as HTMLSpanElement;
 
         expect(mainDiv.childNodes.length).toBe(3);
         expect(h1).toBeDefined();

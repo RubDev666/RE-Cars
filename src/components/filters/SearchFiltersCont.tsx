@@ -3,8 +3,6 @@
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 
-import { Searcher } from '@/components';
-
 import { SearchFiltersProps } from "@/types";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -14,7 +12,7 @@ import { useCarsSelectors } from "@/hooks/useCarsSelectors";
 
 import { optionsType, optionsKey } from "@/utils/globalVariables";
 
-import { Skeleton } from '@/components';
+import { Skeleton, Searcher } from '@/components';
 
 export default function SearchFiltersCont({ openMenu, currentOption, setCurrentOption }: SearchFiltersProps) {
     const pathname = usePathname();
@@ -44,7 +42,7 @@ export default function SearchFiltersCont({ openMenu, currentOption, setCurrentO
                         
                         {optionsType.map((option: string) => (
                             <button
-                                className={`btn-filter capitalize pointer ${currentOption === option ? 'color-1' : 'color-4'}`}
+                                className={`btn-filter ${'test-' + option} capitalize pointer ${currentOption === option ? 'color-1' : 'color-4'}`}
                                 onClick={() => currentOption === option ? setCurrentOption('') : setCurrentOption(option)}
                                 key={option}
                             >

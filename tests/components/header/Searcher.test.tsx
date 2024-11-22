@@ -6,20 +6,22 @@ import * as nextNavigation from 'next/navigation';
 import {userEvent} from '@testing-library/user-event';
 
 import { Searcher } from '@/components';
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
-const pushMock = vi.fn();
+import { pushMock } from '../../../__mocks__/next/navigation';
+//const pushMock = vi.fn();
 
-vi.mock('next/navigation', () => ({
+/*vi.mock('next/navigation', () => ({
     usePathname: () => '/',
     useRouter: () => ({
         push: pushMock
     })
-}))
+}))*/
+vi.mock('next/navigation');
 
-vi.mock('@fortawesome/react-fontawesome', () => ({ 
+/*vi.mock('@fortawesome/react-fontawesome', () => ({ 
     FontAwesomeIcon: ({className, icon}: {className: string | undefined, icon: IconProp}) => <div className={className} >FontAwesomeIconMock</div> 
-}));
+}));*/
+vi.mock('@fortawesome/react-fontawesome');
 
 describe('Searcher()', () => {
     beforeAll(() => {
@@ -43,7 +45,8 @@ describe('Searcher()', () => {
     })
 
     it('"FontAwesomeIcon" has been displayed / should have "icon-disabled" class', () => {
-        const fontAwesomeMock = screen.getByText('FontAwesomeIconMock');
+        //const fontAwesomeMock = screen.getByText('FontAwesomeIconMock');
+        const fontAwesomeMock = document.querySelector('.search-icon') as HTMLSpanElement;
 
         expect(fontAwesomeMock).toBeInTheDocument();
         expect(fontAwesomeMock).toHaveClass('icon-disabled');
@@ -58,7 +61,8 @@ describe('Searcher()', () => {
     it('click event in label element / The form and "FontAwesomeIcon" classes have been changed successfully', () => {
         const label = screen.getByTestId('label-search');
         const form = screen.getByRole('form');
-        const fontAwesomeMock = screen.getByText('FontAwesomeIconMock');
+        //const fontAwesomeMock = screen.getByText('FontAwesomeIconMock');
+        const fontAwesomeMock = document.querySelector('.search-icon') as HTMLSpanElement;
 
         fireEvent.click(label);
 
@@ -70,7 +74,8 @@ describe('Searcher()', () => {
 
     it('blur event in form / The form classes have been changed successfully', () => {
         const form = screen.getByRole('form');
-        const fontAwesomeMock = screen.getByText('FontAwesomeIconMock');
+        //const fontAwesomeMock = screen.getByText('FontAwesomeIconMock');
+        const fontAwesomeMock = document.querySelector('.search-icon') as HTMLSpanElement;
 
         fireEvent.blur(form);
 

@@ -99,9 +99,9 @@ export default function ModalFilters({ createURL, params, tagsParams }: ModalPro
                         }
 
                         return (
-                            <div className="accordion-container border-bottom" key={key}>
+                            <div className={`accordion-container ${`test-` + key} border-bottom`} key={key}>
                                 <button
-                                    className={`btn-action pointer ${obj[key].bool ? 'color-1' : 'color-4'}`}
+                                    className={`btn-action ${`test-` + key} pointer ${obj[key].bool ? 'color-1' : 'color-4'}`}
                                     onClick={() => obj[key].set(!obj[key].bool)}
                                 >
                                     {obj[key].keyUI} <FontAwesomeIcon icon={obj[key].bool? faAngleUp : faAngleDown} className="icon-filter" />
