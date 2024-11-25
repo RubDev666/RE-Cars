@@ -10,7 +10,7 @@ import { socialIcons } from '@/utils/globalVariables';
 
 export default function Footer() {
     return(
-        <footer>
+        <footer role='contentinfo'>
             <div className='logo-links-container'>
                 <Link className="logo-footer t-family" href='/'>
                     RE <FontAwesomeIcon icon={faBolt} className='icon'/> Autos

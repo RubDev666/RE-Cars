@@ -8,7 +8,7 @@ export default function Car({ car }: { car: CarTypes }) {
     const { brand, model, doors, year, transmission, urlImage, price } = car;
 
     return (
-        <div className="car pointer">
+        <div className="car pointer" role="article">
             <div className="img-container">
                 <Image src={urlImage} alt="car" width={600} height={310} priority />
             </div>

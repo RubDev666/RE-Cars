@@ -80,7 +80,7 @@ export default function Header({ data }: { data: { cars: Car[] } | undefined }) 
     }
 
     return (
-        <header className="relative">
+        <header className="relative" role="banner">
             <div className="logo-navbar-container">
                 <div className={`logo-container items-between ${openMenu ? 'active' : ''}`}>
                     <Link
@@ -90,12 +90,12 @@ export default function Header({ data }: { data: { cars: Car[] } | undefined }) 
                         RE <FontAwesomeIcon icon={faBolt} className='icon' />Autos
                     </Link>
 
-                    {!openMenu && <FontAwesomeIcon icon={faBars} className='icons-menu pointer' onClick={() => setOpenMenu(true)} />}
+                    {!openMenu && <FontAwesomeIcon icon={faBars} className='icons-menu pointer test-btn-open-menu' onClick={() => setOpenMenu(true)} />}
 
-                    {openMenu && <FontAwesomeIcon icon={faTimes} className='icons-menu pointer' onClick={() => setOpenMenu(false)} />}
+                    {openMenu && <FontAwesomeIcon icon={faTimes} className='icons-menu pointer test-btn-close-menu' onClick={() => setOpenMenu(false)} />}
                 </div>
 
-                <nav className={`${openMenu ? 'show' : ''} ${pathname === '/seminuevos' ? 'mobile-pre-owned' : 'mobile'}`}>
+                <nav className={`${openMenu ? 'show' : ''} ${pathname === '/seminuevos' ? 'mobile-pre-owned' : 'mobile'}`} role="navigation">
                     <div className='login-container'>
                         <p className='t-family'>Te damos la bienvenida</p>
                         <p className='p-family'>Crea una cuenta o inicia sesión para tener el control de tu compra, venta o financiamiento.</p>
@@ -123,7 +123,7 @@ export default function Header({ data }: { data: { cars: Car[] } | undefined }) 
                                 className={`pointer w-full btn-filter ${usAccordion ? 'color-1' : 'color-4'}`}
                                 onClick={() => setUsAccordion(!usAccordion)}
                             >
-                                Nosotros <FontAwesomeIcon icon={usAccordion ? faAngleUp : faAngleDown} className='color-1 icon-filter' />
+                                Nosotros <FontAwesomeIcon icon={usAccordion ? faAngleUp : faAngleDown} className='color-1 icon-filter test-icon-us' />
                             </button>
 
                             {usAccordion && (
@@ -141,7 +141,7 @@ export default function Header({ data }: { data: { cars: Car[] } | undefined }) 
                                 className={`pointer w-full btn-filter ${helpAccordion ? 'color-1' : 'color-4'}`}
                                 onClick={() => setHelpAccordion(!helpAccordion)}
                             >
-                                Ayuda <FontAwesomeIcon icon={helpAccordion ? faAngleUp : faAngleDown} className='color-1 icon-filter' />
+                                Ayuda <FontAwesomeIcon icon={helpAccordion ? faAngleUp : faAngleDown} className='color-1 icon-filter test-icon-help' />
                             </button>
 
                             {helpAccordion && (
