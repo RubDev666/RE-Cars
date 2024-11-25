@@ -6,8 +6,11 @@ const usePathname = () => '/';
 const useRouter = () => ({
     push: pushMock
 })
+const searchParams = new URLSearchParams('?brand=audi-mercedes+benz');
+const useSearchParams = () => searchParams;
 
 export {
     usePathname,
-    useRouter
+    useRouter,
+    useSearchParams
 }
